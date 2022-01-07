@@ -12,6 +12,19 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
+            <div class="py-3">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    Credentials
+                </h3>
+                <div class="mt-2 max-w-xl ">
+                    <p class="text-base text-gray-700">Email - <span class="font-medium text-indigo-500 hover:text-indigo-600">admin@email.com</span></p>
+                </div>
+                <div class="mt-2 max-w-xl text-sm text-gray-500">
+                    <p class="text-base text-gray-700">Password - <span class="font-medium text-indigo-500 hover:text-indigo-600">password</span></p>
+                </div>
+            </div>
+
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
 

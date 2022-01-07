@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BloodCampController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +21,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::resource('/blood-camps', BloodCampController::class);
+Route::resource('/blood-stocks', BloodStockController::class);
 
 require __DIR__.'/auth.php';
