@@ -19,7 +19,13 @@
 
                  <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('blood-camps.index')" :active="request()->routeIs('blood-camps.index')">
-                        {{ __('Blood Camp') }}
+                        {{ __('Blood Camps') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('blood-stocks.index')" :active="request()->routeIs('blood-stocks.index')">
+                        {{ __('Blood Stocks') }}
                     </x-nav-link>
                 </div>
             </div>

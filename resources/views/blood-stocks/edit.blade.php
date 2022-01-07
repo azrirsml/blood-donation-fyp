@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="flex justify-start py-5 mb-2 min-w-full">
-        <a href="{{ route('blood-camps.index') }}" class="inline-flex justify-end items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+        <a href="{{ route('blood-stocks.index') }}" class="inline-flex justify-end items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 -mr-1 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
@@ -17,20 +17,20 @@
     <x-alert></x-alert>
 
     <div class="p-5 bg-white rounded-lg shadow-md">
-        <form action="{{ route('blood-camps.update', $blood_camp->id) }}" method="POST" class="space-y-8 divide-y divide-gray-200">
+        <form action="{{ route('blood-stocks.update', $blood_stock->id) }}" method="POST" class="space-y-8 divide-y divide-gray-200">
             @csrf
             @method('PUT')
             <div class="space-y-8 divide-y divide-gray-200 ">
                 <div class="pt-2">
                     <div>
                         <h3 class="text-lg leading-6 font-medium text-gray-900">
-                            Personal Information
+                            Blood Stock Information
                         </h3>
                         <p class="mt-1 text-sm text-gray-500">
-                            Use a permanent address where you can receive mail.
+                            Use a valid information only.
                         </p>
                     </div>
-                    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-3">
                         <div class="sm:col-span-3">
                             <label for="state_id" class="block text-sm font-medium text-gray-700">
                                 States
@@ -38,53 +38,49 @@
                             <div class="mt-1">
                                 <select name="state_id" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
                                     @foreach ($states as $state)
-                                        <option value="{{ $state->id }}" {{ data_get($blood_camp, 'state_id') === $state->id ? 'selected' : '' }}> {{ $state->name }}</option>
+                                        <option value="{{ $state->id }}" {{ data_get($blood_stock, 'state_id') === $state->id ? 'selected' : '' }}> {{ $state->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="sm:col-span-3">
                             <label for="hospital_id" class="block text-sm font-medium text-gray-700">
-                                Organized By
+                                Hospital
                             </label>
                             <div class="mt-1">
                                 <select name="hospital_id" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
                                     @foreach ($hospitals as $hospital)
-                                        <option value="{{ $hospital->id }}" {{ data_get($blood_camp, 'hospital_id') === $hospital->id ? 'selected' : '' }}>{{  $hospital->name }}</option>
+                                        <option value="{{ $hospital->id }}" {{ data_get($blood_stock, 'hospital_id') === $hospital->id ? 'selected' : '' }}>{{  $hospital->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="sm:col-span-3">
-                            <label for="venue" class="block text-sm font-medium text-gray-700">
-                                Venue
+                            <label for="blood_type" class="block text-sm font-medium text-gray-700">
+                                Blood Type
                             </label>
                             <div class="mt-1">
-                                <input type="text" name="venue" value="{{ data_get($blood_camp, 'venue') }}" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <select name="blood_type_id" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                    @foreach ($bloodTypes as $bloodType)
+                                    <option value="{{ $bloodType->id }}" {{ data_get($blood_stock, 'blood_type_id') === $bloodType->id ? 'selected' : '' }}>{{ $bloodType->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="sm:col-span-3">
-                            <label for="email" class="block text-sm font-medium text-gray-700">
-                                Email address
+                            <label for="donation_type" class="block text-sm font-medium text-gray-700">
+                                Donation Type
                             </label>
                             <div class="mt-1">
-                                <input name="email" type="email" value="{{ data_get($blood_camp, 'email') }}" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="donation_type" value="{{ data_get($blood_stock, 'donation_type') }}" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
                             </div>
                         </div>
                         <div class="sm:col-span-3">
-                            <label for="contact" class="block text-sm font-medium text-gray-700">
-                                Contact
+                            <label for="status" class="block text-sm font-medium text-gray-700">
+                                Status
                             </label>
                             <div class="mt-1">
-                                <input type="text" name="contact" value="{{ data_get($blood_camp, 'contact') }}" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
-                            </div>
-                        </div>
-                        <div class="sm:col-span-3">
-                            <label for="date" class="block text-sm font-medium text-gray-700">
-                                Date
-                            </label>
-                            <div class="mt-1">
-                                <input type="datetime-local" name="date" value="{{ date_format($blood_camp->date, 'Y-m-d\TH:i') }}" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="status" value="{{ data_get($blood_stock, 'status') }}" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
                             </div>
                         </div>
                     </div>
@@ -92,7 +88,7 @@
             </div>
             <div class="pt-5">
                 <div class="flex justify-end">
-                    <a href="{{ route('blood-camps.index') }}" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                    <a href="{{ route('blood-stocks.index') }}" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
                         Cancel
                     </a>
                     <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">

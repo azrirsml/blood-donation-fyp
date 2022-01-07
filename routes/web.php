@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BloodCampController;
+use App\Http\Controllers\BloodStockController;
 use Illuminate\Support\Facades\Route;
 
 /*

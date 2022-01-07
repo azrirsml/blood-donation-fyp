@@ -16,6 +16,8 @@ class CreateHospitalsTable extends Migration
         Schema::create('hospitals', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('email')->nullable();
+            $table->string('contact')->nullable();
             $table->timestamps();
         });
 
