@@ -2,24 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBloodStockRequest;
 use App\Models\BloodStock;
 use App\Models\BloodType;
+use App\Models\DonationType;
 use App\Models\Hospital;
 use App\Models\State;
+use App\Models\StockStatus;
 use Illuminate\Http\Request;
 
 class BloodStockController extends Controller
 {
     public function index()
     {
-        $bloodStocks = BloodStock::orderBy('created_at', 'desc')->paginate(10);
+        $bloodStocks = BloodStock::with(['stockStatus', 'donationType'])->orderBy('created_at', 'desc')->paginate(10);
 
         return view('blood-stocks.index', compact('bloodStocks'));
-    }
-
-    public function show(BloodStock $blood_stock)
-    {
-        return view('blood-stocks.show', compact('blood_stock'));
     }
 
     public function create()
@@ -30,20 +28,16 @@ class BloodStockController extends Controller
 
         $bloodTypes = BloodType::all(['name', 'id']);
 
-        return view('blood-stocks.create', compact('states', 'hospitals', 'bloodTypes'));
+        $donationTypes = DonationType::all(['name', 'id']);
+
+        $statuses = StockStatus::all(['name', 'id']);
+
+        return view('blood-stocks.create', compact('states', 'hospitals', 'bloodTypes', 'donationTypes', 'statuses'));
     }
 
-    public function store(Request $request)
+    public function store(StoreBloodStockRequest $request)
     {
-        $data = $request->validate([
-            'state_id' => 'required',
-            'hospital_id' => 'required',
-            'blood_type_id' => 'required',
-            'donation_type' => 'required',
-            'status' => 'required',
-        ]);
-
-        BloodStock::create($data);
+        BloodStock::create($request->validated());
 
         return redirect()->route('blood-stocks.index')->with('success', 'Successfully added');
     }
@@ -56,20 +50,16 @@ class BloodStockController extends Controller
 
         $bloodTypes = BloodType::all(['name', 'id']);
 
-        return view('blood-stocks.edit', compact('blood_stock', 'states', 'hospitals', 'bloodTypes'));
+        $donationTypes = DonationType::all(['name', 'id']);
+
+        $statuses = StockStatus::all(['name', 'id']);
+
+        return view('blood-stocks.edit', compact('blood_stock', 'states', 'hospitals', 'bloodTypes', 'donationTypes', 'statuses'));
     }
 
-    public function update(BloodStock $blood_stock, Request $request)
+    public function update(BloodStock $blood_stock, StoreBloodStockRequest $request)
     {
-        $data = $request->validate([
-            'state_id' => 'required',
-            'hospital_id' => 'required',
-            'blood_type_id' => 'required',
-            'donation_type' => 'required',
-            'status' => 'required',
-        ]);
-
-        $blood_stock->update($data);
+        $blood_stock->update($request->validated());
         
         return redirect()->route('blood-stocks.index')->with('success', 'Successfully updated');
     }

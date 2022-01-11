@@ -68,19 +68,27 @@
                             </div>
                         </div>
                         <div class="sm:col-span-3">
-                            <label for="donation_type" class="block text-sm font-medium text-gray-700">
+                            <label for="donation_type_id" class="block text-sm font-medium text-gray-700">
                                 Donation Type
                             </label>
                             <div class="mt-1">
-                                <input type="text" name="donation_type" value="{{ data_get($blood_stock, 'donation_type') }}" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <select name="donation_type_id" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                    @foreach ($donationTypes as $donationType)
+                                    <option value="{{ $donationType->id }}" {{ data_get($blood_stock, 'donation_type_id') === $donationType->id ? 'selected' : '' }}>{{ $donationType->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="sm:col-span-3">
-                            <label for="status" class="block text-sm font-medium text-gray-700">
+                            <label for="status_id" class="block text-sm font-medium text-gray-700">
                                 Status
                             </label>
                             <div class="mt-1">
-                                <input type="text" name="status" value="{{ data_get($blood_stock, 'status') }}" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <select name="status_id" class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                    @foreach ($statuses as $status)
+                                    <option value="{{ $status->id }}" {{ data_get($blood_stock, 'status_id') === $status->id ? 'selected' : '' }}>{{ $status->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>

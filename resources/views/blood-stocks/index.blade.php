@@ -66,12 +66,22 @@
                                         {{ data_get($bloodStock, 'bloodType.name') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-normal text-sm text-gray-800">
-                                        {{ data_get($bloodStock, 'donation_type') }}
+                                        {{ data_get($bloodStock, 'donationType.name') }}
                                     </td>
                                     <td class="px-4 py-3 whitespace-normal ">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800">
-                                          {{ data_get($bloodStock, 'status') }}
-                                      </span>
+                                        @if (data_get($bloodStock, 'stockStatus.name') === 'Good')
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800">
+                                                {{ data_get($bloodStock, 'stockStatus.name') }}
+                                            </span>
+                                        @elseif(data_get($bloodStock, 'stockStatus.name') === 'Decreasing')
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-yellow-100 text-yellow-800">
+                                                {{ data_get($bloodStock, 'stockStatus.name') }}
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-red-100 text-red-800">
+                                                {{ data_get($bloodStock, 'stockStatus.name') }}
+                                            </span>
+                                        @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <div class="text-sm text-gray-800">{{ data_get($bloodStock, 'hospital.email') }}</div>
