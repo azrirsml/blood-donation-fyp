@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BloodCampController;
 use App\Http\Controllers\BloodStockController;
 use Illuminate\Support\Facades\Route;
@@ -25,5 +26,6 @@ Route::get('/dashboard', function () {
 
 Route::resource('/blood-camps', BloodCampController::class);
 Route::resource('/blood-stocks', BloodStockController::class);
+Route::resource('/appointments', AppointmentController::class);
 
 require __DIR__.'/auth.php';
